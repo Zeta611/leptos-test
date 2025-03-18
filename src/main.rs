@@ -6,6 +6,12 @@ pub fn Counter() -> impl IntoView {
     console_log("Counter");
     let (value, set_value) = signal(0);
 
+    Effect::new(move |_| {
+        if value.get() >= 3 {
+            set_value.set(0);
+        }
+    });
+
     view! {
         <button on:click=move |_| {
             console_log(&value.get().to_string());
